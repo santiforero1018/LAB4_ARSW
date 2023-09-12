@@ -69,6 +69,42 @@ public class InMemoryPersistenceTest {
         
     }
 
+    @Test
+    public void searchBlueprintsByAuthorName(){
+        InMemoryBlueprintPersistence ibpp = new InMemoryBlueprintPersistence();
+
+        Point[] pts=new Point[]{new Point(0, 0),new Point(10, 10)};
+        Blueprint bp1=new Blueprint("john", "thepaint",pts);
+
+        Point[] pts2=new Point[]{new Point(10, 15),new Point(20, 20)};
+        Blueprint bp2=new Blueprint("Martha", "thepaint1",pts2);
+
+        Point[] pts3=new Point[]{new Point(16, 7),new Point(30, 30)};
+        Blueprint bp3=new Blueprint("john", "thepaint2",pts3);
+
+        Point[] pts4=new Point[]{new Point(20, 35),new Point(40, 40)};
+        Blueprint bp4=new Blueprint("Alex", "thepaint3",pts4);
+
+        try{
+            ibpp.saveBlueprint(bp1);
+            ibpp.saveBlueprint(bp2);
+            ibpp.saveBlueprint(bp3);
+            ibpp.saveBlueprint(bp4);
+        } catch(BlueprintPersistenceException e){
+
+        }
+
+        try {
+            assertNotNull("the result wasn't null", ibpp.getBlueprintsByAuthor("john"));
+            assertTrue("This BluePrint is in the set", ibpp.getBlueprintsByAuthor("john").contains(bp1));
+            assertTrue("This BluePrint is in the set", ibpp.getBlueprintsByAuthor("john").contains(bp3));
+            assertFalse("This BluePrint isn't in the set", ibpp.getBlueprintsByAuthor("john").contains(bp2));
+        } catch (BlueprintNotFoundException e) {
+            fail("And Exception was expected after looking for the blue print");
+        }
+
+    }
+
 
     
 }

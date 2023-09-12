@@ -10,6 +10,8 @@ import edu.eci.arsw.blueprints.model.Point;
 import edu.eci.arsw.blueprints.persistence.BlueprintNotFoundException;
 import edu.eci.arsw.blueprints.persistence.BlueprintPersistenceException;
 import edu.eci.arsw.blueprints.persistence.BlueprintsPersistence;
+
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -51,10 +53,10 @@ public class InMemoryBlueprintPersistence implements BlueprintsPersistence {
     @Override
     public Set<Blueprint> getBlueprintsByAuthor(String author) throws BlueprintNotFoundException {
         Set<Blueprint> resp = new HashSet<>();
-        Tuple[] aux = (Tuple[]) blueprints.keySet().toArray();
-        for (Tuple tp : aux) {
-            if (tp.getElem1().equals(author)) {
-                resp.add(blueprints.get(tp));
+        
+        for(Map.Entry<Tuple<String, String>, Blueprint> space : blueprints.entrySet()){
+            if(space.getKey().getElem1().equals(author)){
+                resp.add(space.getValue());
             }
         }
         return resp;
