@@ -21,37 +21,47 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class BlueprintsServices {
-   
+
     @Autowired
-    BlueprintsPersistence bpp=null;
-    
-    public void addNewBlueprint(Blueprint bp){
-        
+    BlueprintsPersistence bpp;
+
+    public void addNewBlueprint(Blueprint bp) {
+
     }
-    
-    public Set<Blueprint> getAllBlueprints(){
+
+    public Set<Blueprint> getAllBlueprints() {
         return null;
     }
-    
+
     /**
      * 
      * @param author blueprint's author
-     * @param name blueprint's name
+     * @param name   blueprint's name
      * @return the blueprint of the given name created by the given author
      * @throws BlueprintNotFoundException if there is no such blueprint
      */
-    public Blueprint getBlueprint(String author,String name) throws BlueprintNotFoundException{
-        throw new UnsupportedOperationException("Not supported yet."); 
+    public Blueprint getBlueprint(String author, String name) throws BlueprintNotFoundException {
+        // throw new UnsupportedOperationException("Not supported yet.");
+        try {
+            return this.bpp.getBlueprint(author, name);
+
+        } catch (BlueprintNotFoundException e) {
+            throw new BlueprintNotFoundException(e.getMessage());
+        }
     }
-    
+
     /**
      * 
      * @param author blueprint's author
      * @return all the blueprints of the given author
      * @throws BlueprintNotFoundException if the given author doesn't exist
      */
-    public Set<Blueprint> getBlueprintsByAuthor(String author) throws BlueprintNotFoundException{
-        throw new UnsupportedOperationException("Not supported yet."); 
+    public Set<Blueprint> getBlueprintsByAuthor(String author) throws BlueprintNotFoundException {
+        try{
+            return this.bpp.getBlueprintsByAuthor(author);
+        }catch(BlueprintNotFoundException e){
+            throw new BlueprintNotFoundException(e.getMessage());
+        }
     }
-    
+
 }
