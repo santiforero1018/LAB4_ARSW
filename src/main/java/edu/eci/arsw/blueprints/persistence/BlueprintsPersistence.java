@@ -40,4 +40,6 @@ public interface BlueprintsPersistence {
      * @throws BlueprintNotFoundException if the given author doesn't exist
      */
     public Set<Blueprint> getBlueprintsByAuthor(String author) throws BlueprintNotFoundException;
+
+    public Set<Blueprint> getAllBlueprints() throws BlueprintNotFoundException;
 }

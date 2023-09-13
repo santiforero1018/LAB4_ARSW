@@ -22,7 +22,7 @@ import org.springframework.stereotype.Service;
  *
  * @author hcadavid
  */
-@Service
+//@Service
 public class InMemoryBlueprintPersistence implements BlueprintsPersistence {
 
     private final Map<Tuple<String, String>, Blueprint> blueprints = new HashMap<>();
@@ -33,6 +33,16 @@ public class InMemoryBlueprintPersistence implements BlueprintsPersistence {
         Blueprint bp = new Blueprint("_authorname_", "_bpname_ ", pts);
         blueprints.put(new Tuple<>(bp.getAuthor(), bp.getName()), bp);
 
+    }
+
+    @Override
+    public Set<Blueprint> getAllBlueprints() throws BlueprintNotFoundException {
+        Set<Blueprint> resp = new HashSet<>();
+        
+        for(Map.Entry<Tuple<String, String>, Blueprint> space : blueprints.entrySet()){
+            resp.add(space.getValue());
+        }
+        return resp;
     }
 
     @Override
@@ -61,5 +71,7 @@ public class InMemoryBlueprintPersistence implements BlueprintsPersistence {
         return resp;
 
     }
+
+    
 
 }
