@@ -17,14 +17,14 @@ import org.springframework.stereotype.Service;
  *
  * @author hcadavid
  */
-//@Service
+@Service
 public class submuestreoBlueprintPersistence implements BlueprintsPersistence {
 
     private final Map<Tuple<String, String>, Blueprint> blueprints = new HashMap<>();
 
     public submuestreoBlueprintPersistence() {
         // load stub data
-        Point[] pts = new Point[] { new Point(140, 140), new Point(115, 115), new Point(100, 100), new Point(90, 90), new Point(80, 80), new Point(70, 70) };
+        Point[] pts = new Point[] { new Point(140, 140), new Point(115, 115), new Point(100, 100), new Point(90, 90), new Point(80, 80), new Point(70, 70)};
         Blueprint bp = new Blueprint("prueba", "funca? ", pts);
         blueprints.put(new Tuple<>(bp.getAuthor(), bp.getName()), bp);
 
@@ -32,22 +32,34 @@ public class submuestreoBlueprintPersistence implements BlueprintsPersistence {
 
     @Override
     public void saveBlueprint(Blueprint bp) throws BlueprintPersistenceException {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'saveBlueprint'");
-    }
-
-    @Override
-    public Blueprint getBlueprint(String author, String bprintname) throws BlueprintNotFoundException {
-       Blueprint bp = blueprints.get(new Tuple<>(author, bprintname));
-        for(int i = 0; i <= bp.getPoints().size(); i ++){
-            
+        if (blueprints.containsKey(new Tuple<>(bp.getAuthor(), bp.getName()))) {
+            throw new BlueprintPersistenceException("The given blueprint already exists: " + bp);
+        } else {
+            blueprints.put(new Tuple<>(bp.getAuthor(), bp.getName()), bp);
         }
     }
 
     @Override
+    public Blueprint getBlueprint(String author, String bprintname) throws BlueprintNotFoundException {
+       Blueprint pb = blueprints.get(new Tuple<>(author, bprintname));
+       pb.resetFilter();
+        for(int i = 0; i < pb.getPoints().size(); i ++){
+            if(i % 2 == 0){
+                pb.addPointFilter(pb.getPoints().get(i));
+            }
+        }
+        return pb;
+    }
+
+    @Override
     public Set<Blueprint> getBlueprintsByAuthor(String author) throws BlueprintNotFoundException {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getBlueprintsByAuthor'");
+        Set<Blueprint> resp = new HashSet<>();
+        for(Map.Entry<Tuple<String, String>, Blueprint> space : blueprints.entrySet()){
+            if(space.getKey().getElem1().equals(author)){
+                resp.add(space.getValue());
+            }
+        }
+        return resp;
     }
 
     @Override

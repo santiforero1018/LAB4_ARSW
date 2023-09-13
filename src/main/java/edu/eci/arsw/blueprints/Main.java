@@ -16,30 +16,41 @@ public class Main {
     public static void main(String[] args) {
         ApplicationContext ac = new ClassPathXmlApplicationContext("applicationContext.xml");
         BlueprintsServices bs = ac.getBean(BlueprintsServices.class);
-        System.out.println("-----------------GET BLUEPRINTS-----------------");
-        try {
-            System.out.println(bs.getAllBlueprints());
-        } catch (BlueprintNotFoundException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
+        // System.out.println("-----------------GET BLUEPRINTS-----------------");
+        // try {
+        //     System.out.println(bs.getAllBlueprints());
+        // } catch (BlueprintNotFoundException e) {
+        //     // TODO Auto-generated catch block
+        //     e.printStackTrace();
+        // }
         System.out.println("-----------------NEW BLUEPRINT-----------------");
         Point[] pts0 = new Point[] { new Point(10, 10), new Point(60, 60) };
         Blueprint bp0 = new Blueprint("haorl", "airetuapal", pts0);
-        System.out.println("Blueprint Creado");
+        System.out.println("Blueprint Creado" + bp0);
         try {
             bs.addNewBlueprint(bp0);
         } catch (BlueprintPersistenceException e) {
             e.printStackTrace();
         }
-        System.out.println("-----------------GET BLUEPRINTS-----------------");
+        // System.out.println("-----------------GET BLUEPRINTS-----------------");
+        // try {
+        //     System.out.println(bs.getAllBlueprints());
+        // } catch (BlueprintNotFoundException e) {
+        //     // TODO Auto-generated catch block
+        //     e.printStackTrace();
+        // }
 
+
+        System.out.println("-----------------PRUEBA FILTRO FUNCINA?-----------------");
         try {
-            System.out.println(bs.getAllBlueprints());
+            System.out.println(bs.getBlueprint("haorl", "airetuapal"));
+            System.out.println("-----------------SIN FILTRO-----------------");
+            System.out.println(bs.getBlueprint("haorl", "airetuapal").getPoints());
+            System.out.println("-----------------CON FILTRO-----------------");
+            System.out.println(bs.getBlueprint("haorl", "airetuapal").getFilter());
         } catch (BlueprintNotFoundException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-
     }
 }

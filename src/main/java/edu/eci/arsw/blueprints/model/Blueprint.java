@@ -14,16 +14,21 @@ public class Blueprint {
     private List<Point> points=null;
     
     private String name=null;
+
+     private List<Point> filter=null;
+
             
     public Blueprint(String author,String name,Point[] pnts){
         this.author=author;
         this.name=name;
         points=Arrays.asList(pnts);
+        filter = new ArrayList<>();
     }
          
     public Blueprint(String author, String name){
         this.name=name;
         points=new ArrayList<>();
+        filter = new ArrayList<>();
     }
 
     public Blueprint() {
@@ -36,7 +41,19 @@ public class Blueprint {
     public String getAuthor() {
         return author;
     }
+
+    public void resetFilter(){
+        filter.removeAll(filter);
+    }
     
+    public List<Point> getFilter(){
+        return filter;
+    }
+
+    public void addPointFilter(Point p){
+        this.filter.add(p);
+    }
+
     public List<Point> getPoints() {
         return points;
     }
