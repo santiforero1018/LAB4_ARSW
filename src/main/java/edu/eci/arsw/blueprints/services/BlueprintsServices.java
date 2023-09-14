@@ -10,9 +10,11 @@ import edu.eci.arsw.blueprints.model.Point;
 import edu.eci.arsw.blueprints.persistence.BlueprintNotFoundException;
 import edu.eci.arsw.blueprints.persistence.BlueprintPersistenceException;
 import edu.eci.arsw.blueprints.persistence.BlueprintsPersistence;
-import java.util.LinkedHashMap;
-import java.util.Map;
+import edu.eci.arsw.blueprints.persistence.Filter;
+// import java.util.LinkedHashMap;
+// import java.util.Map;
 import java.util.Set;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,6 +27,9 @@ public class BlueprintsServices {
 
     @Autowired
     BlueprintsPersistence bpp;
+
+    @Autowired
+    Filter filter;
 
 
     /**
@@ -74,6 +79,16 @@ public class BlueprintsServices {
         }catch(BlueprintNotFoundException e){
             throw new BlueprintNotFoundException(e.getMessage());
         }
+    }
+
+    public List<Point> getFilterPointsOneBp(String author, String bprintname) throws BlueprintNotFoundException{
+        try {
+            return this.filter.getPoints(this.bpp.getBlueprint(author, bprintname));
+        } catch (BlueprintNotFoundException e) {
+            // TODO: handle exception
+            throw new BlueprintNotFoundException(e.getMessage());
+        }
+
     }
 
 

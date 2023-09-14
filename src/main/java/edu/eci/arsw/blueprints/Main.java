@@ -9,8 +9,8 @@ import edu.eci.arsw.blueprints.model.Blueprint;
 import edu.eci.arsw.blueprints.model.Point;
 import edu.eci.arsw.blueprints.persistence.BlueprintNotFoundException;
 import edu.eci.arsw.blueprints.persistence.BlueprintPersistenceException;
-import edu.eci.arsw.blueprints.persistence.impl.InMemoryBlueprintPersistence;
-import edu.eci.arsw.blueprints.persistence.impl.Tuple;
+// import edu.eci.arsw.blueprints.persistence.impl.InMemoryBlueprintPersistence;
+// import edu.eci.arsw.blueprints.persistence.impl.Tuple;
 
 public class Main {
     public static void main(String[] args) {
@@ -24,7 +24,7 @@ public class Main {
         //     e.printStackTrace();
         // }
         System.out.println("-----------------NEW BLUEPRINT-----------------");
-        Point[] pts0 = new Point[] { new Point(10, 10), new Point(60, 60) };
+        Point[] pts0 = new Point[] { new Point(140, 140), new Point(115, 115), new Point(100, 100), new Point(80, 80), new Point(80, 80), new Point(80, 80),new Point(70, 70) };
         Blueprint bp0 = new Blueprint("haorl", "airetuapal", pts0);
         System.out.println("Blueprint Creado" + bp0);
         try {
@@ -44,10 +44,10 @@ public class Main {
         System.out.println("-----------------PRUEBA FILTRO FUNCINA?-----------------");
         try {
             System.out.println(bs.getBlueprint("haorl", "airetuapal"));
-            System.out.println("-----------------SIN FILTRO-----------------");
-            System.out.println(bs.getBlueprint("haorl", "airetuapal").getPoints());
             System.out.println("-----------------CON FILTRO-----------------");
-            System.out.println(bs.getBlueprint("haorl", "airetuapal").getFilter());
+            System.out.println(bs.getFilterPointsOneBp("haorl", "airetuapal")); 
+            // System.out.println("-----------------CON FILTRO-----------------");
+            // System.out.println(bs.getBlueprint("haorl", "airetuapal").getFilter());
         } catch (BlueprintNotFoundException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
